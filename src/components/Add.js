@@ -1,42 +1,88 @@
 import React, { Component } from 'react';
 import './Add.css';
+
 export class Add extends Component {
   constructor(props) {
     super(props);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSequenceChange = this.handleSequenceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleNameChange(e) {
-    let name = e.target.value;
-    this.props.onNameChange(name)
+    this.validateSequence = this.validateSequence.bind(this);
   }
   handleSequenceChange(e) {
     let sequence = e.target.value;
-    this.props.onSequenceChange(sequence)
+    this.validateSequence(sequence)
   }
   handleSubmit(e) {
-    let finalSequence = {
-      sequenceName: document.getElementById('name').value,
-      sequenceDescription: document.getElementById('description').value,
-      sequence: document.getElementById('sequence').value,
-    };
-    console.log(finalSequence);
-    this.props.onSubmit(finalSequence);
+    // allows button submission only if sequence is valid
+    if (this.validateSequence(document.getElementById('sequence').value)) {
+      let finalSequence = {
+        sequenceName: document.getElementById('name').value,
+        sequenceDescription: document.getElementById('description').value,
+        sequence: document.getElementById('sequence').value.toUpperCase(),
+      };
+      this.props.onSubmit(finalSequence);
+    } else {
+      document.querySelector('#Add button').classList.add('shake');
+    }
+  }
+  validateSequence(proposedString) {
+    // displays a message if sequence contains non-'ACGT' letters
+    for (let i = 0; i < proposedString.length; i++) {
+      switch (proposedString[i].toUpperCase()) {
+        case 'A':
+          break;
+        case 'C':
+          break;
+        case 'G':
+          break;
+        case 'T':
+          break;
+        default:
+          if (document.querySelector('#sequence:invalid')) {
+            document.getElementById('error-invalid-sequence')
+              .classList.remove('hidden');
+            return false;
+          }
+      }
+    }
+    // displays a message if sequence already uploaded
+    for (let i = 0; i < this.props.loadedSequences.length; i++) {
+      if (this.props.loadedSequences[i].sequence === proposedString.toUpperCase()) {
+        let myel = document.getElementById('sequence');
+        document.getElementById('error-duplicate-sequence').classList.remove('hidden');
+        return false;
+      }
+    }
+    return true;
   }
   render() {
     return (
       <main id="Add">
-      <h4> blah new</h4>
-        <h1>Add DNA Sequence</h1>
+        <h1>Add a New Sequence</h1>
         <form>
           <label htmlFor="name">Sequence Name</label>
-            <input type="text" onChange={this.handleNameChange} id="name" autoFocus required placeholder="Example: MK178577.1" />
+            <input
+                   type="text"
+                   autoFocus
+                   id="name"
+                   required placeholder="Example: MK178577.1" />
           <label htmlFor="description">Sequence Description</label>
             <input type="text" id="description" placeholder="Example: Synthetic construct plasmid pUB1392, complete sequence" />
           <label>Sequence
-            <textarea onChange={this.handleSequenceChange} id="sequence" required placeholder="Example: ACTGGCCGAT"></textarea>
+            <input
+              id="sequence"
+              onChange={this.handleSequenceChange}
+              pattern="[ACGTacgt]+"
+              placeholder="Example: ACTGGCCGAT"
+              required
+              title="Please use only the letters ACG and T." />
           </label>
+        <div id={"error-duplicate-sequence"} className="form-error hidden">
+          This sequence has already been uploaded to the database.
+        </div>
+        <div id={"error-invalid-sequence"} className="form-error hidden">
+          Please use only the letters ACG and T.
+        </div>
         </form>
           <button type={"submit"} onClick={this.handleSubmit}>Upload</button>
       </main>

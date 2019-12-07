@@ -7,19 +7,27 @@ export class Sequences extends Component {
       expandedSeq: {
         sequenceName: '',
         sequenceDescription: '',
-        sequence: 'ACGT',
+        sequence: ''
       }
     };
     this.colorSequences = this.colorSequences.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.showModal = this.showModal.bind(this);
   }
-
-  toggleModal(sequence) {
-    console.log('toggleModal() was called, and received this target.name:');
-    console.log(sequence);
-      // toggleDetailView isnt another component, just a modal window on top of this one. on click u must toggle : get id and display: block. OR display none.
+  showModal(sequence) {
+    document.getElementById("modal")
+      .classList.remove('hidden');
+    for (let i = 0; i < this.props.loadedSequences.length; i++) {
+      let currentSeq = this.props.loadedSequences[i];
+      if (currentSeq.sequenceName === sequence) {
+        this.setState( {expandedSeq: {
+          sequenceName: currentSeq.sequenceName,
+            sequenceDescription: currentSeq.sequenceDescription,
+            sequence: currentSeq.sequence
+        }});
+      }
+    }
   }
   colorSequences(el) {
     // colors the 'ACGT' text of any elements with the class 'colored'
@@ -60,18 +68,25 @@ export class Sequences extends Component {
   handleClick(e) {
     console.log('~');
 		switch (e.target.name) {
-			case 'sequenceName':
+      case 'closeModal':
+        document.getElementById("modal")
+          .classList.add('hidden');
+        break;
+      case 'modal':
+        document.getElementById("modal")
+          .classList.add('hidden');
+        break;
+			case 'sequenceDescription':
 				this.props.onReorder(e.target.name);
 				break;
-			case 'sequenceDescription':
+			case 'sequenceName':
 				this.props.onReorder(e.target.name);
 				break;
 			case 'sequence':
 				this.props.onReorder(e.target.name);
 				break;
       default:
-        console.log(e.target.id);
-        // this.toggleModal(e.target.id)
+        this.showModal(e.target.id)
 		}
   }
   // Lifecycle Methods
@@ -98,9 +113,11 @@ export class Sequences extends Component {
             onClick={this.handleClick}
             name="sequence" >Sequence</button>
         </div>
-        <div id="modal">
+        <div id="modal" onClick={this.handleClick}>
           <div>
-            I'm the modal window.
+            <button
+              onClick={this.handleClick}
+              name="closeModal" >X</button>
             <h2>{this.state.expandedSeq.sequenceName}</h2>
             <p>{this.state.expandedSeq.sequenceDescription}</p>
             <p className="colored">{this.state.expandedSeq.sequence}</p>

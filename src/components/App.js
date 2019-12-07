@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {Switch, Route, Link} from 'react-router-dom';
 import { Add } from './Add';
 import { Sequences } from './Sequences';
-
-
 import './App.css';
 
 class App extends Component {
@@ -50,8 +48,6 @@ class App extends Component {
       // sequenceArray = sequences[0].sequences;
       // console.log((sequenceArray[0].sequenceName));
     this.reorder = this.reorder.bind(this);
-    this.validateName = this.validateName.bind(this);
-    this.validateSequence = this.validateSequence.bind(this);
     this.changeNewSequence = this.changeNewSequence.bind(this);
   }
   reorder(metadataProperty) {
@@ -60,19 +56,6 @@ class App extends Component {
         a[metadataProperty].localeCompare(b[metadataProperty]))
     });
   }
-  validateName(proposedName) {
-    // TODO: check for duplicates; combine these two into one function
-    console.log(proposedName);
-    // this.setState({ newSequence: proposedSequence });
-
-  }
-  validateSequence(proposedSequence) {
-    console.log(proposedSequence);
-    // TODO: validate for real, then comine it into one function with validateName
-    // checks for valid characters. breaks early if invalid.
-    // checks for duplicates
-    // displays errors to user
-  }
   changeNewSequence(newSequence) {
     // adds uploaded sequence to the current runtime
     this.setState({ loadedSequences:
@@ -80,17 +63,14 @@ class App extends Component {
     });
     // TODO: redirect user to the Sequences component
   }
-  // Event Handlers
-  // TODO: the events for the main two buttons on Home
   // Lifecycle Methods
   render() {
     return (
       <div>
         <header>~header and nav~</header>
         <Add
-          onNameChange={this.validateName} 
-          onSequenceChange={this.validateSequence}
-          onSubmit={this.changeNewSequence} />
+          onSubmit={this.changeNewSequence}
+          loadedSequences={this.state.loadedSequences} />
         <Sequences
           loadedSequences={this.state.loadedSequences}
           onReorder={this.reorder} />

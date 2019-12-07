@@ -37,6 +37,7 @@ $RECYCLE.BIN/
 /coverage
 
 # production
+/dist
 /build
 
 # misc

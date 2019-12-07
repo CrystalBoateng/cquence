@@ -2,6 +2,14 @@
 .hidden {
   display: none;
 }
+
+form *:invalid {
+  border: 3px solid red;
+}
+.shake {
+  width: 500px;
+}
+
 .letterA {
   color: rgb(221, 0, 0);
 }
