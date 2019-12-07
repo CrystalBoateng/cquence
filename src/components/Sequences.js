@@ -99,7 +99,11 @@ export class Sequences extends Component {
         <h1>Sequences</h1>
         <div id="search-wrapper">
           <label htmlFor="query">Search:</label>
-            <input type="search" onChange={this.handleChange} name="query" autoFocus placeholder="Search..." />
+            <input type="search"
+                   onChange={this.handleChange}
+                   name="query"
+                   autoFocus
+                   placeholder="Search..." />
         </div>
         <div id="sort-wrapper">
           <p>Sort by...</p>
@@ -113,7 +117,7 @@ export class Sequences extends Component {
             onClick={this.handleClick}
             name="sequence" >Sequence</button>
         </div>
-        <div id="modal" onClick={this.handleClick}>
+        <div id="modal" onClick={this.handleClick} className="hidden">
           <div>
             <button
               onClick={this.handleClick}
