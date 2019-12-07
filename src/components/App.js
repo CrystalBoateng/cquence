@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Switch, Route, Link} from 'react-router-dom';
 import { Add } from './Add';
 import { Sequences } from './Sequences';
 import './App.css';
@@ -43,12 +42,35 @@ class App extends Component {
           "sequenceName": "X54209.1", "sequence": "GATCTCGATCCCGCGAAATTAATCAG"
         },
       ],
+      view: ''
     };
     // TODO: load sequences directly from JSON file:
       // sequenceArray = sequences[0].sequences;
       // console.log((sequenceArray[0].sequenceName));
+    this.displayComponent = this.displayComponent.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.reorder = this.reorder.bind(this);
-    this.changeNewSequence = this.changeNewSequence.bind(this);
+    this.updateSequences = this.updateSequences.bind(this);
+  }
+  displayComponent(view) {
+    // selects components to render
+    let _this = this;
+    setTimeout(function () {
+      switch (view) {
+        case 'link-to-add':
+          _this.setState({ view:
+            <Add
+              onSubmit={_this.updateSequences}
+              loadedSequences={_this.state.loadedSequences} />
+          });
+          break;
+        case 'link-to-sequences':
+          _this.setState({ view:
+            <Sequences loadedSequences={_this.state.loadedSequences} onReorder={_this.reorder} />
+          });
+          break;
+      }
+    }, 5);
   }
   reorder(metadataProperty) {
     this.setState({ loadedSequences: 
@@ -56,24 +78,30 @@ class App extends Component {
         a[metadataProperty].localeCompare(b[metadataProperty]))
     });
   }
-  changeNewSequence(newSequence) {
+  updateSequences(newSequence) {
     // adds uploaded sequence to the current runtime
     this.setState({ loadedSequences:
       [newSequence, ...this.state.loadedSequences]
     });
-    // TODO: redirect user to the Sequences component
+    this.displayComponent('link-to-sequences');
+  }
+  // Event Handlers
+  handleClick(e) {
+    this.displayComponent(e.target.id);
   }
   // Lifecycle Methods
+  componentDidMount() {
+    this.displayComponent('link-to-add');
+  }
   render() {
     return (
       <div>
         <header>~header and nav~</header>
-        <Add
-          onSubmit={this.changeNewSequence}
-          loadedSequences={this.state.loadedSequences} />
-        <Sequences
-          loadedSequences={this.state.loadedSequences}
-          onReorder={this.reorder} />
+        <nav>
+          <button onClick={this.handleClick} id={"link-to-add"}>Add New</button>
+          <button onClick={this.handleClick} id={"link-to-sequences"}>View All Sequences</button>
+        </nav>
+        {this.state.view}
       </div>
     );
   }

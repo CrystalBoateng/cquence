@@ -95,7 +95,7 @@ export class Sequences extends Component {
   }
   render() {
     return(
-      <main id="sequences">
+      <main id="sequences" className="view">
         <h1>Sequences</h1>
         <div id="search-wrapper">
           <label htmlFor="query">Search:</label>
