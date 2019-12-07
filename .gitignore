@@ -1,3 +1,8 @@
+# =========================
+# Operating System Files
+# =========================
+
+
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
@@ -18,6 +23,45 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+
 # =========================
-# Operating System Files
+# React Files
 # =========================
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# =========================
+# Custom Files
+# =========================
+/notes
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
