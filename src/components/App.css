@@ -1,21 +1,294 @@
- body {background-color: gray; color: white;}
+/*************************************
+  @@ Global
+**************************************/
+h1 {
+  color: #f08700;
+  margin-top: 1rem;
+  text-align: center;
+}
+h2 {
+  display: none;
+}
+h3 {
+  color: #00a7a7;
+  margin: 0;
+  font-size: 1.5em;
+}
+p {
+  margin-bottom: 1rem;
+  display: inline;
+}
+button {
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
 .hidden {
   display: none;
 }
-
-/*form*/
-.shake {
-  width: 500px;
+@media only screen and (min-width: 450px) {
+  main {
+    padding: 3rem;
+  }
+}
+/* Header */
+header {
+  background-color: #f08700;
+  box-shadow: 0 -1px 26px #5c5c5c;
+  display: grid;
+  width: 100%;
+}
+header picture {
+  background-color: #f08700;
+  grid-column: 1 / 4;
+}
+nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  grid-column: 1 / 4;
+  -ms-grid-row: 2 / 3;
+  grid-row: 2 / 3;
+  margin: 1rem 2rem 2rem;
+}
+nav button {
+  background-color: #f08700;
+  border: none;
+  border-bottom: 0.25rem solid #f08700;
+  color: #292929;
+  display: block;
+  font-size: 1.375rem;
+  font-weight: 600;
+  padding-right: 1rem;
+  text-decoration: none;
+}
+nav button:hover {
+  border-bottom: 0.25rem solid white;
+  color: white;
+}
+@media only screen and (min-width: 450px) {
+  header picture {
+    margin: 82px auto 0;
+    width: 29rem;
+  }
+  nav button {
+    font-size: 1.875rem;
+  }
+}
+@media only screen and (min-width: 810px) {
+  header picture {
+    grid-column: 1 / 2;
+    margin: 2rem 0 2rem 2rem;
+    width: 17rem;
+  }
+  header {
+    grid-template-columns: 17rem auto;
+    grid-template-rows: 1 / 2;
+  }
+  nav {
+    grid-column: 2 / 3;
+    -ms-grid-row: auto;
+    grid-row: auto;
+    margin: 1rem 0;
+    justify-content: flex-end;
+  }
+  nav button {
+    padding-right: 1rem;
+  }
+}
+/* Forms */
+label {
+  font-size: 1rem;
+  padding: 0 .65rem;
+}
+label span {
+  background-color: #f08700;
+  font-weight: 700;
+}
+input {
+  border: 1px solid black;
+  border-radius: 14px;
+  box-shadow: 2px 4px 11px #00000063;
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.375rem;
+  margin-bottom: 3rem;
+  padding: .65rem .65rem;
+  width: 100%;
+}
+input:hover {
+  box-shadow:
+          inset 1px 0 1px 1px #000000a1,
+          2px 4px 11px #000000e0;
+}
+@media only screen and (min-width: 810px) {
+  label span {
+    float: right;
+    position: relative;
+    top: 6px;
+  }
+  label span::after { /* clearfix */
+    clear: both;
+    content: ",";
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
 }
 
+/*************************************
+  @@ ADD A NEW SEQUENCE
+**************************************/
+#add #sequence {
+  margin-bottom: 2rem;
+}
+#add button {
+  background-color: #00a7a7;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 2px 4px 11px #00000063;
+  cursor: pointer;
+  display: block;
+  margin: 2rem auto;
+  min-width: 12rem;
+  padding: 1rem;
+}
+#add button,
+#add button a {
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#add button:focus,
+#add button:hover {
+  background-color: #f08700;
+  color: black;
+}
+.form-error {
+  background-color: #ffefef; /* or maybe #ffe8e0 */
+  border-radius: 14px;
+  border: red 2px solid;
+  color: red;
+  margin: 1rem;
+  padding: .5rem;
+  text-align: center;
+}
+.shake {
+  animation: shake 0.4s ease-out normal;
+  transform: translate3d(0, 0, 0);
+  perspective: 1000px;
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+/*************************************
+  @@ SEQUENCES
+**************************************/
+#sequences {
+  background-color:  #dcdcdc;
+}
+#sequences label {
+  display: none;
+}
+#sequences input{
+  margin-bottom: 4rem;
+}
+#sort-wrapper,
+#sort-wrapper button {
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+#sort-wrapper p {
+  margin-right: 3rem;
+}
+#sort-wrapper button {
+  font-size: 1.375rem;
+  background-color: #dcdcdc;
+  border: none;
+}
+#sort-wrapper button:hover {
+  color: #00a7a7;
+}
+.metadata {
+  background-color: white;
+  border-radius: 14px;
+  box-shadow: 2px 4px 11px #00000063;
+  margin-bottom: 3rem;
+  padding: 2rem;
+}
+
+#modal div :nth-child(4),
+.metadata :nth-child(3) {
+  margin: 0;
+  word-wrap: break-word;
+}
+.metadata :nth-child(3) {
+  color: #9c9a8d; /* my site color = #5b594d*/
+  display: block;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Support for IE 10 and 11 */
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .metadata :nth-child(3) {
+    word-wrap: normal;
+  }
+}
+/* Support for IE Edge browser 12+ */
+@supports (-ms-accelerator:true) {
+  .metadata :nth-child(3) {
+    word-wrap: normal;
+  }
+}
+
+
+
+
+
+/* Modal window */
+#modal {
+  /*background-color: black;*/
+  width: 100%;
+}
+#modal div {
+  background-color: white;
+  border: 1px solid #00a7a7;
+  border-radius: 14px;
+  padding: 3rem;
+  position: absolute;
+  margin: 6rem auto;
+  width: 100%;
+}
+
+p.colored span {
+  display: inline-block;
+}
 .letterA {
-  color: rgb(221, 0, 0);
+  color: #DD0000;
 }
 .letterC {
-  color: rgb(221, 133, 0);
+  color: #DD8500;
 }
 .letterG {
-  color: rgb(24, 214, 24);
+  color: #18D618;
 }
 .letterT {
   color: blue;

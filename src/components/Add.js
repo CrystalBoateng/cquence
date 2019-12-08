@@ -22,22 +22,15 @@ export class Add extends Component {
       };
       this.props.onSubmit(finalSequence);
     } else {
-      document.querySelector('#Add button').classList.add('shake');
+      document.querySelector('#add button').classList.add('shake');
     }
   }
   validate(proposedString) {
-    // hides any previous error messages
+    // hides previous error messages
     document.getElementById('error-invalid-sequence')
       .classList.add('hidden');
     document.getElementById('error-duplicate-sequence')
       .classList.add('hidden');
-    // displays a message if any required fields are missing
-    if (
-      !(document.getElementById('name')).value ||
-      !(document.getElementById('sequence')).value
-    )
-      document.getElementById('error-missing-field')
-        .classList.remove('hidden');
     // displays a message if sequence contains non-'ACGT' letters
     for (let i = 0; i < proposedString.length; i++) {
       switch (proposedString[i].toUpperCase()) {
@@ -69,29 +62,38 @@ export class Add extends Component {
         return false;
       }
     }
+    // displays a message if any required fields are missing
+    if (
+      !(document.getElementById('name')).value ||
+      !(document.getElementById('sequence')).value
+    ) {
+      document.getElementById('error-missing-field')
+        .classList.remove('hidden');
+      return false;
+    }
     return true;
   }
   render() {
     return (
-      <main id="add" className="view">
+      <main id="add">
         <h1>Add a New Sequence</h1>
         <form action={'/sequences'}>
-          <label htmlFor="name">Sequence Name</label>
+          <label htmlFor="name">Sequence Name: <span>*Required</span></label>
             <input type="text"
                    autoFocus
                    id="name"
                    required placeholder="Example: MK178577.1" />
-          <label htmlFor="description">Sequence Description</label>
+          <label htmlFor="description">Sequence Description: </label>
             <input type="text"
                    id="description"
                    placeholder="Example: Synthetic construct plasmid pUB1392, complete sequence" />
-          <label>Sequence
+          <label>Sequence: <span>*Required</span>
             <input id="sequence"
-              onChange={this.handleSequenceChange}
-              pattern="[ACGTacgt]+"
-              placeholder="Example: ACTGGCCGAT"
-              required
-              title="Please use only the letters ACG and T." />
+                   onChange={this.handleSequenceChange}
+                   pattern="[ACGTacgt]+"
+                   placeholder="Example: ACTGGCCGAT"
+                   required
+                   title="Please use only the letters ACG and T." />
           </label>
           <div id={"error-missing-field"} className="form-error hidden">
             Please enter all required fields.
@@ -103,7 +105,7 @@ export class Add extends Component {
           Sequences may only include the letters ACG and T.
         </div>
         </form>
-          <button type={"submit"} onClick={this.handleSubmit}>Upload</button>
+          <button type={"submit"} onClick={this.handleSubmit}>Add Sequence</button>
       </main>
     );
   }

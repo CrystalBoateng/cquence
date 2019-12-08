@@ -32,6 +32,7 @@ export class Sequences extends Component {
   colorSequences(el) {
     // colors the 'ACGT' text of any elements with the class 'colored'
     if (el.className && el.className.includes('colored')) {
+      console.log()
       let uncoloredText = el.innerHTML;
       el.innerHTML = '';
       for (let i = 0; i < uncoloredText.length; i++) {
@@ -95,50 +96,54 @@ export class Sequences extends Component {
   }
   render() {
     return(
-      <main id="sequences" className="view">
+      <main id="sequences">
         <h1>Sequences</h1>
-        <div id="search-wrapper">
-          <label htmlFor="query">Search:</label>
-            <input type="search"
-                   onChange={this.handleChange}
-                   name="query"
-                   autoFocus
-                   placeholder="Search..." />
-        </div>
-        <div id="sort-wrapper">
-          <p>Sort by...</p>
-          <button 
-            onClick={this.handleClick}
-            name="sequenceName" >Name</button>
-          <button 
-            onClick={this.handleClick}
-            name="sequenceDescription" >Description</button>
-          <button 
-            onClick={this.handleClick}
-            name="sequence" >Sequence</button>
-        </div>
-        <div id="modal" onClick={this.handleClick} className="hidden">
+        <section>
+          <h2>Sorting and Filtering</h2>
+            <label htmlFor="query">Search:</label>
+              <input type="search"
+                     onChange={this.handleChange}
+                     name="query"
+                     autoFocus
+                     placeholder="Search..." />
+          <div id="sort-wrapper">
+            <p>Sort by...</p>
+            <button
+              onClick={this.handleClick}
+              name="sequenceName" >Name</button>
+            <button
+              onClick={this.handleClick}
+              name="sequenceDescription" >Description</button>
+            <button
+              onClick={this.handleClick}
+              name="sequence" >Sequence</button>
+          </div>
+        </section>
+        <section id="modal" onClick={this.handleClick} className="hidden">
+          <h2>Detail View</h2>
           <div>
             <button
               onClick={this.handleClick}
               name="closeModal" >X</button>
             <h2>{this.state.expandedSeq.sequenceName}</h2>
-            <p>{this.state.expandedSeq.sequenceDescription}</p>
+            <h3>{this.state.expandedSeq.sequenceDescription}</h3>
+            <br />
             <p className="colored">{this.state.expandedSeq.sequence}</p>
           </div>
-        </div>
-        <div id="metadata-wrapper">
+        </section>
+        <section id="metadata-wrapper">
+          <h2>Sequence List</h2>
           {this.props.loadedSequences.map((instance, index) => {
             return (
               <div
                 className="metadata" 
                 id={instance.sequenceName} 
                 key={index} >
-                <h2
+                <h3
                   onClick={this.handleClick}
                   id={instance.sequenceName} >
                   {instance.sequenceName}
-                </h2>
+                </h3>
                 <p
                   onClick={this.handleClick}
                   id={instance.sequenceName} >
@@ -152,7 +157,7 @@ export class Sequences extends Component {
               </div >
             )
           })}
-        </div>
+        </section>
       </main>
     )
   }
