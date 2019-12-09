@@ -4,28 +4,11 @@ import './Add.css';
 export class Add extends Component {
   constructor(props) {
     super(props);
-    this.handleSequenceChange = this.handleSequenceChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validate = this.validate.bind(this);
   }
-  handleSequenceChange(e) {
-    let sequence = e.target.value;
-    this.validate(sequence)
-  }
-  handleSubmit(e) {
-    // allows button submission only if sequence is valid
-    if (this.validate(document.getElementById('sequence').value)) {
-      let finalSequence = {
-        sequenceName: document.getElementById('name').value,
-        sequenceDescription: document.getElementById('description').value,
-        sequence: document.getElementById('sequence').value.toUpperCase(),
-      };
-      this.props.onSubmit(finalSequence);
-    } else {
-      document.querySelector('#add button').classList.add('shake');
-    }
-  }
-  validate(proposedString) {
+   validate(proposedString) {
     // hides previous error messages
     document.getElementById('error-invalid-sequence')
       .classList.add('hidden');
@@ -73,6 +56,25 @@ export class Add extends Component {
     }
     return true;
   }
+  // Event Handlers
+  handleChange(e) {
+    let sequence = e.target.value;
+    this.validate(sequence)
+  }
+  handleSubmit(e) {
+    // allows button submission only if sequence is valid
+    if (this.validate(document.getElementById('sequence').value)) {
+      let finalSequence = {
+        sequenceName: document.getElementById('name').value,
+        sequenceDescription: document.getElementById('description').value,
+        sequence: document.getElementById('sequence').value.toUpperCase(),
+      };
+      this.props.onSubmit(finalSequence);
+    } else {
+      document.querySelector('#add button').classList.add('shake');
+    }
+  }
+  // Lifecycle Methods
   render() {
     return (
       <main id="add">
@@ -89,7 +91,7 @@ export class Add extends Component {
                    placeholder="Example: Synthetic construct plasmid pUB1392, complete sequence" />
           <label>Sequence: <span>*Required</span>
             <input id="sequence"
-                   onChange={this.handleSequenceChange}
+                   onChange={this.handleChange}
                    pattern="[ACGTacgt]+"
                    placeholder="Example: ACTGGCCGAT"
                    required

@@ -10,10 +10,40 @@ export class Sequences extends Component {
         sequence: ''
       }
     };
-    this.colorSequences = this.colorSequences.bind(this);
+    this.colorLetters = this.colorLetters.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.showModal = this.showModal.bind(this);
+  }
+  applySkeletonDelay() {
+    console.log('i load skeletons');
+    // increments a delay for loading metadata
+    let nodes = document.getElementsByClassName('metadata');
+    console.log(nodes);
+    for (let i = 0; i < nodes.length; i++) {
+      // appends a style node to each metadata div
+      nodes[i].setAttribute("style","animation-delay: ." + [i] + "s;");
+      for (let j = 0; j < 3; j++) {
+        // appends a style node to each metadata child
+        let child = nodes[i].childNodes[j];
+        // console.log(child);
+        child.setAttribute("style","animation-delay: ." + [i] + "s;");
+      }
+    }
+  }
+  colorLetters() {
+    // colors letters in the modal window sequence
+    let el = document.getElementById('colored-seq');
+    el.innerHTML = '';
+    let uncoloredText = this.state.expandedSeq.sequence;
+    for (let i = 0; i < uncoloredText.length; i++) {
+      // creates a span around each letter and appends that to the el
+      let newSpan = document.createElement("span");
+      newSpan.setAttribute("class", uncoloredText[i]);
+      let textNode = document.createTextNode(uncoloredText[i]);
+      newSpan.appendChild(textNode);
+      el.appendChild(newSpan);
+    }
   }
   showModal(sequence) {
     document.getElementById("modal")
@@ -29,25 +59,6 @@ export class Sequences extends Component {
       }
     }
   }
-  colorSequences(el) {
-    // colors the 'ACGT' text of any elements with the class 'colored'
-    if (el.className && el.className.includes('colored')) {
-      console.log()
-      let uncoloredText = el.innerHTML;
-      el.innerHTML = '';
-      for (let i = 0; i < uncoloredText.length; i++) {
-        // creates a span around each letter and appends that to the el
-        let newSpan = document.createElement("span");
-        newSpan.setAttribute("class","letter" + uncoloredText[i]);
-        let textNode = document.createTextNode(uncoloredText[i]);
-        newSpan.appendChild(textNode);
-        el.appendChild(newSpan);
-      }
-    }
-    // traverses the DOM recursively
-    for (let i = 0; i < el.childNodes.length; i++)
-      this.colorSequences(el.childNodes[i]);
-  }
   // Event Handlers
   handleChange(e) {
     let q = e.target.value.toUpperCase();
@@ -61,13 +72,16 @@ export class Sequences extends Component {
       let sequenceName;
       for (let i = 0; i < all.length; i++) {
         sequenceName = all[i].sequenceName.toUpperCase();
-        if (sequenceName.startsWith(q) === false)
+        if (sequenceName.startsWith(q) === false) {
+          if (!(document.getElementById(sequenceName))) {
+            alert('Sequences have not yet finished loading.');
+          }
           document.getElementById(sequenceName).classList.add('hidden');
+        }
       }
     }
   }
   handleClick(e) {
-    console.log('~');
 		switch (e.target.name) {
       case 'closeModal':
         document.getElementById("modal")
@@ -89,10 +103,16 @@ export class Sequences extends Component {
       default:
         this.showModal(e.target.id)
 		}
+    if (e.target.id === "modal")
+      document.getElementById("modal")
+        .classList.add('hidden');
   }
   // Lifecycle Methods
+  componentDidMount() {
+    this.applySkeletonDelay();
+  }
   componentDidUpdate() {
-    this.colorSequences(document.getElementById('modal'));
+    this.colorLetters();
   }
   render() {
     return(
@@ -108,27 +128,39 @@ export class Sequences extends Component {
                      placeholder="Search..." />
           <div id="sort-wrapper">
             <p>Sort by...</p>
-            <button
-              onClick={this.handleClick}
-              name="sequenceName" >Name</button>
-            <button
-              onClick={this.handleClick}
-              name="sequenceDescription" >Description</button>
-            <button
-              onClick={this.handleClick}
-              name="sequence" >Sequence</button>
+            <button onClick={this.handleClick} name="sequenceName" >
+              Name
+              <img alt={"Sort arrow"} name="sequenceName" src={"/img/sort.svg"} />
+            </button>
+            <button onClick={this.handleClick} name="sequenceDescription" >
+              Description
+              <img alt={"Sort arrow"} name="sequenceDescription" src={"/img/sort.svg"} />
+            </button>
+            <button onClick={this.handleClick} name="sequence" >
+              Sequence
+              <img alt={"Sort arrow"} name="sequence" src={"/img/sort.svg"} />
+            </button>
           </div>
         </section>
-        <section id="modal" onClick={this.handleClick} className="hidden">
+        <section
+          className="hidden"
+          id="modal"
+          onClick={this.handleClick}
+        >
           <h2>Detail View</h2>
           <div>
-            <button
-              onClick={this.handleClick}
-              name="closeModal" >X</button>
-            <h2>{this.state.expandedSeq.sequenceName}</h2>
-            <h3>{this.state.expandedSeq.sequenceDescription}</h3>
+            <button name="closeModal" onClick={this.handleClick} >
+              <img
+                alt={"Close window"}
+                name="closeModal"
+                onClick={this.handleClick}
+                src={"/img/close.svg"}
+              />
+            </button>
+            <h3>{this.state.expandedSeq.sequenceName}</h3>
+            <p>{this.state.expandedSeq.sequenceDescription}</p>
             <br />
-            <p className="colored">{this.state.expandedSeq.sequence}</p>
+            <p id="colored-seq">{this.state.expandedSeq.sequence}</p>
           </div>
         </section>
         <section id="metadata-wrapper">
@@ -136,22 +168,15 @@ export class Sequences extends Component {
           {this.props.loadedSequences.map((instance, index) => {
             return (
               <div
-                className="metadata" 
-                id={instance.sequenceName} 
-                key={index} >
-                <h3
-                  onClick={this.handleClick}
-                  id={instance.sequenceName} >
+                className="metadata" id={instance.sequenceName} key={index}
+              >
+                <h3 onClick={this.handleClick} id={instance.sequenceName} >
                   {instance.sequenceName}
                 </h3>
-                <p
-                  onClick={this.handleClick}
-                  id={instance.sequenceName} >
+                <p onClick={this.handleClick} id={instance.sequenceName} >
                   {instance.sequenceDescription}
                 </p>
-                <p
-                  onClick={this.handleClick}
-                  id={instance.sequenceName} >
+                <p onClick={this.handleClick} >
                   {instance.sequence}
                 </p>
               </div >

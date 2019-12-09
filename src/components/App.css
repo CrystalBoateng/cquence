@@ -33,7 +33,7 @@ button {
 /* Header */
 header {
   background-color: #f08700;
-  box-shadow: 0 -1px 26px #5c5c5c;
+  filter: drop-shadow(0 -1px 13px #5c5c5c);
   display: grid;
   width: 100%;
 }
@@ -107,6 +107,8 @@ label span {
 input {
   border: 1px solid black;
   border-radius: 14px;
+  -webkit-box-shadow: 2px 4px 11px #00000063;
+  -moz-box-shadow: 2px 4px 11px #00000063;
   box-shadow: 2px 4px 11px #00000063;
   display: block;
   font-family: 'Poppins', sans-serif;
@@ -116,6 +118,12 @@ input {
   width: 100%;
 }
 input:hover {
+  -webkit-box-shadow:
+          inset 1px 0 1px 1px #000000a1,
+          2px 4px 11px #000000e0;
+  -moz-box-shadow:
+          inset 1px 0 1px 1px #000000a1,
+          2px 4px 11px #000000e0;
   box-shadow:
           inset 1px 0 1px 1px #000000a1,
           2px 4px 11px #000000e0;
@@ -134,6 +142,30 @@ input:hover {
     visibility: hidden;
   }
 }
+/* Footer */
+footer {
+  border-top: 0.27rem solid #00a7a7;
+}
+footer button {
+  background-color: #2d2a25;
+  border: none;
+  color: #bbb7a5;
+  font-size: 1.375rem;
+  height: 6rem;
+  width: 100%;
+}
+footer button:hover {
+  color: #f08700
+}
+footer div {
+  background-color: #171614;
+  border: none;
+  color: #959183;
+  height: 3rem;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
 
 /*************************************
   @@ ADD A NEW SEQUENCE
@@ -145,6 +177,8 @@ input:hover {
   background-color: #00a7a7;
   border: none;
   border-radius: 30px;
+  -webkit-box-shadow: 2px 4px 11px #00000063;
+  -moz-box-shadow: 2px 4px 11px #00000063;
   box-shadow: 2px 4px 11px #00000063;
   cursor: pointer;
   display: block;
@@ -165,7 +199,7 @@ input:hover {
   color: black;
 }
 .form-error {
-  background-color: #ffefef; /* or maybe #ffe8e0 */
+  background-color: #ffd5d5;
   border-radius: 14px;
   border: red 2px solid;
   color: red;
@@ -174,6 +208,8 @@ input:hover {
   text-align: center;
 }
 .shake {
+  -webkit-animation: shake 0.4s ease-out normal;
+  -o-animation: shake 0.4s ease-out normal;
   animation: shake 0.4s ease-out normal;
   transform: translate3d(0, 0, 0);
   perspective: 1000px;
@@ -208,13 +244,21 @@ input:hover {
 #sequences input{
   margin-bottom: 4rem;
 }
+#sort-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
 #sort-wrapper,
 #sort-wrapper button {
   font-weight: 600;
   margin-bottom: .5rem;
 }
 #sort-wrapper p {
+  flex-basis: 100%;
   margin-right: 3rem;
+}
+#sort-wrapper img {
+  width: 1rem;
 }
 #sort-wrapper button {
   font-size: 1.375rem;
@@ -226,70 +270,180 @@ input:hover {
 }
 .metadata {
   background-color: white;
+  border: 2px solid white;
   border-radius: 14px;
+  -webkit-box-shadow: 2px 4px 11px #00000063;
+  -moz-box-shadow: 2px 4px 11px #00000063;
   box-shadow: 2px 4px 11px #00000063;
+  cursor: pointer;
   margin-bottom: 3rem;
   padding: 2rem;
 }
-
-#modal div :nth-child(4),
+.metadata:hover {
+  border: 2px solid #00a7a7;
+}
+.metadata, .metadata * {
+  animation: skeleton-load .3s ease-out normal forwards;
+  filter: opacity(0);
+}
+@keyframes skeleton-load {
+  0% {
+    /*opacity: 0;*/
+    filter: opacity(0);
+  }
+  100% {
+    /*opacity: 1;*/
+    filter: opacity(1);
+  }
+}
+#modal div > :nth-child(4),
 .metadata :nth-child(3) {
   margin: 0;
-  word-wrap: break-word;
 }
 .metadata :nth-child(3) {
-  color: #9c9a8d; /* my site color = #5b594d*/
+  color: #9c9a8d;
   display: block;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* Support for IE 10 and 11 */
+/* Supports IE 10 and 11 */
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
   .metadata :nth-child(3) {
     word-wrap: normal;
   }
 }
-/* Support for IE Edge browser 12+ */
+/* Supports IE Edge browser 12+ */
 @supports (-ms-accelerator:true) {
   .metadata :nth-child(3) {
     word-wrap: normal;
   }
 }
-
-
-
-
-
 /* Modal window */
 #modal {
-  /*background-color: black;*/
+  background-color: #00000087;
+  left: 0;
+  position: fixed;
+  top: 0;
   width: 100%;
+  height: 100%;
+  z-index: 10;
 }
 #modal div {
   background-color: white;
-  border: 1px solid #00a7a7;
+  border: .25rem solid #00a7a7;
   border-radius: 14px;
+  -webkit-box-shadow: 0 0 14px 5px #00000054;
+  -moz-box-shadow: 0 0 14px 5px #00000054;
+  box-shadow: 0 0 14px 5px #00000054;
   padding: 3rem;
-  position: absolute;
-  margin: 6rem auto;
-  width: 100%;
+  left: 5%;
+  overflow-y: auto;
+  max-height: 90%;
+  position: fixed;
+  top: 5%;
+  width: 90%;
 }
-
-p.colored span {
+#modal button {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6rem;
+}
+#colored-seq {
+  display: block;
+  margin-top: 0;
+}
+#colored-seq span {
   display: inline-block;
 }
-.letterA {
+.A {
   color: #DD0000;
 }
-.letterC {
+.C {
   color: #DD8500;
 }
-.letterG {
+.G {
   color: #18D618;
 }
-.letterT {
+.T {
   color: blue;
+}
+@media only screen and (min-width: 810px) {
+  #sequences {
+    padding-bottom: 6rem;
+  }
+  #sort-wrapper p {
+    display: none;
+  }
+  #sort-wrapper {
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-template-columns: 9rem 40% auto;
+    margin-bottom: 0;
+    padding-bottom: .25rem;
+  }
+  #sort-wrapper button {
+    margin-bottom: 0;
+    padding-left: 0;
+    text-align: left;
+  }
+  #metadata-wrapper {
+    animation: fade-in .8s ease-out .5s normal forwards;
+    background-color: #dcdcdc;
+    -webkit-transition: box-shadow 5s ease-in;
+    -moz-transition: box-shadow 5s ease-in;
+    -ms-transition: box-shadow 5s ease-in;
+    -o-transition: box-shadow 5s ease-in;
+    transition: box-shadow 5s ease-in;
+  }
+  @keyframes fade-in {
+    0% {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    100% {
+      -webkit-box-shadow: 2px 4px 11px #00000063;
+      -moz-box-shadow: 2px 4px 11px #00000063;
+      box-shadow: 2px 4px 11px #00000063;
+    }
+  }
+  .metadata {
+    align-items: end;
+    border-radius: 0;
+    box-shadow: none;
+    grid-column-gap: 2rem;
+    grid-template-columns: 9rem 40% auto;
+    margin-bottom: 0;
+    padding: .25rem;
+  }
+  main section div {
+    display: grid;
+  }
+  .metadata:hover {
+    filter: drop-shadow(0 0 7px #00000020);
+    z-index: 10;
+  }
+  .metadata > * {
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .metadata h3 {
+    font-size: 1.625rem;
+    grid-column: 1 / 2;
+  }
+  .metadata :nth-child(2) {
+    grid-column: 2 / 3;
+    margin: 0;
+  }
+  .metadata :nth-child(3) {
+    grid-column: 3 / 4;
+  }
 }
