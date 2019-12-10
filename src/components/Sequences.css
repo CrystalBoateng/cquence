@@ -1,0 +1,214 @@
+main#sequences {
+  background-color:  #dcdcdc;
+}
+#sequences label {
+  display: none;
+}
+#sequences input{
+  margin-bottom: 4rem;
+}
+#sort-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+#sort-wrapper,
+#sort-wrapper button {
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+#sort-wrapper p {
+  flex-basis: 100%;
+  margin-right: 3rem;
+}
+#sort-wrapper img {
+  width: 1rem;
+}
+#sort-wrapper button {
+  font-size: 1.375rem;
+  background-color: #dcdcdc;
+  border: none;
+}
+#sort-wrapper button:hover {
+  color: #00a7a7;
+}
+.metadata {
+  background-color: white;
+  border: 2px solid white;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  -webkit-box-shadow: 2px 4px 11px #00000063;
+  -moz-box-shadow: 2px 4px 11px #00000063;
+  box-shadow: 2px 4px 11px #00000063;
+  cursor: pointer;
+  margin-bottom: 3rem;
+  padding: 2rem;
+}
+.metadata:hover {
+  border: 2px solid #00a7a7;
+}
+.metadata, .metadata * {
+  animation: async-load .3s ease-out normal forwards;
+  filter: opacity(0);
+}
+@keyframes async-load {
+  0% {
+    filter: opacity(0);
+  }
+  100% {
+    filter: opacity(1);
+  }
+}
+#modal div > :nth-child(4),
+.metadata :nth-child(3) {
+  margin: 0;
+}
+.metadata :nth-child(3) {
+  color: #9c9a8d;
+  display: block;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Supports IE 10 and 11 */
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .metadata :nth-child(3) {
+    word-wrap: normal;
+  }
+}
+/* Supports IE Edge browser 12+ */
+@supports (-ms-accelerator:true) {
+  .metadata :nth-child(3) {
+    word-wrap: normal;
+  }
+}
+/* Modal window */
+#modal {
+  background-color: #00000087;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+#modal div {
+  background-color: white;
+  border: .25rem solid #00a7a7;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  -webkit-box-shadow: 0 0 14px 5px #00000054;
+  -moz-box-shadow: 0 0 14px 5px #00000054;
+  box-shadow: 0 0 14px 5px #00000054;
+  padding: 3rem;
+  left: 5%;
+  overflow-y: auto;
+  max-height: 90%;
+  position: fixed;
+  top: 5%;
+  width: 90%;
+}
+#modal button {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6rem;
+}
+#colored-seq {
+  display: block;
+  margin-top: 0;
+}
+#colored-seq span {
+  display: inline-block;
+}
+.A {
+  color: #DD0000;
+}
+.C {
+  color: #DD8500;
+}
+.G {
+  color: #18D618;
+}
+.T {
+  color: blue;
+}
+@media only screen and (min-width: 810px) {
+  #sequences {
+    padding-bottom: 6rem;
+  }
+  #sort-wrapper p {
+    display: none;
+  }
+  #sort-wrapper {
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-template-columns: 9rem 40% auto;
+    margin-bottom: 0;
+    padding-bottom: .25rem;
+  }
+  #sort-wrapper button {
+    margin-bottom: 0;
+    padding-left: 0;
+    text-align: left;
+  }
+  #metadata-wrapper {
+    animation: fade-in .8s ease-out .5s normal forwards;
+    background-color: #dcdcdc;
+    -webkit-transition: box-shadow 5s ease-in;
+    -moz-transition: box-shadow 5s ease-in;
+    -ms-transition: box-shadow 5s ease-in;
+    -o-transition: box-shadow 5s ease-in;
+    transition: box-shadow 5s ease-in;
+  }
+  @keyframes fade-in {
+    0% {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    100% {
+      -webkit-box-shadow: 2px 4px 11px #00000063;
+      -moz-box-shadow: 2px 4px 11px #00000063;
+      box-shadow: 2px 4px 11px #00000063;
+    }
+  }
+  .metadata {
+    align-items: end;
+    border-radius: 0;
+    box-shadow: none;
+    grid-column-gap: 2rem;
+    grid-template-columns: 9rem 40% auto;
+    margin-bottom: 0;
+    padding: .25rem;
+  }
+  main section div {
+    display: grid;
+  }
+  .metadata:hover {
+    filter: drop-shadow(0 0 7px #00000020);
+    z-index: 10;
+  }
+  .metadata > * {
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .metadata h3 {
+    font-size: 1.625rem;
+    grid-column: 1 / 2;
+  }
+  .metadata :nth-child(2) {
+    grid-column: 2 / 3;
+    margin: 0;
+  }
+  .metadata :nth-child(3) {
+    grid-column: 3 / 4;
+  }
+}

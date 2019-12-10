@@ -1,0 +1,106 @@
+#add #sequence {
+  margin-bottom: 2rem;
+}
+#loading-bar {
+  border: 0.27rem solid #f08700;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  display: none;
+  height: 1.25rem;
+  margin: 2rem auto;
+  width: calc(100% - 2rem);
+}
+#loading-bar div {
+  -webkit-animation: widen 0.4s ease-out normal;
+  -o-animation: widen 0.4s ease-out normal;
+  animation: widen 0.4s ease-out normal;
+  background-color: #f08700;
+  display: none;
+  height: .7rem;
+  width: 100%;
+}
+@keyframes widen {
+  0% {
+    width: 1%;
+  }
+  100% {
+    width: calc(100%);
+  }
+}
+.form-error {
+  background-color: #ffd5d5;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  border: red 2px solid;
+  color: red;
+  margin: 1rem;
+  padding: .5rem;
+  text-align: center;
+}
+#add button {
+  background-color: #00a7a7;
+  border: none;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 4px 11px #00000063;
+  -moz-box-shadow: 2px 4px 11px #00000063;
+  box-shadow: 2px 4px 11px #00000063;
+  cursor: pointer;
+  display: block;
+  margin: 2rem auto;
+  min-width: 12rem;
+  padding: 1rem;
+}
+#add button {
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#add button:focus,
+#add button:hover {
+  background-color: #f08700;
+  color: black;
+}
+#add .deactivated-button {
+  background-color: #3e342470;
+}
+#add .deactivated-button:focus,
+#add .deactivated-button:hover {
+  background-color: #3e342470;
+  color: white;
+}
+.shake {
+  -webkit-animation: shake 0.3s linear normal;
+  -o-animation: shake 0.3s linear normal;
+  animation: shake 0.3s linear normal;
+  transform: translateX(0);
+  perspective: 1000px;
+}
+@keyframes shake {
+  0% {
+    transform: translateX(-8px);
+  }
+  20% {
+    transform: translateX(14px);
+  }
+  40% {
+    transform: translateX(-14px);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  70% {
+    transform: translateX(6px);
+  }
+  80% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(2px);
+  }
+}
