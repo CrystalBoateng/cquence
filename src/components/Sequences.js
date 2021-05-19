@@ -16,8 +16,8 @@ export class Sequences extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.showModal = this.showModal.bind(this);
   }
-  applySkeletonDelay() {
-    // increments a delay for loading metadata
+  applyLoadingDelay() {
+    // simulates waiting for a network response after making a GET request
     let nodes = document.getElementsByClassName('metadata');
     for (let i = 0; i < nodes.length; i++) {
       // appends a style node to each metadata div
@@ -107,7 +107,8 @@ export class Sequences extends Component {
   // Lifecycle Methods
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeydown, false);
-    this.applySkeletonDelay();
+    this.applyLoadingDelay();
+    this.colorLetters();
   }
   componentDidUpdate() {
     this.colorLetters();

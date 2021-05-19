@@ -48,7 +48,7 @@ main#sequences {
   border: 2px solid #00a7a7;
 }
 .metadata, .metadata * {
-  animation: async-load .3s ease-out normal forwards;
+  animation: async-load .3s ease-in normal forwards;
   filter: opacity(0);
 }
 @keyframes async-load {

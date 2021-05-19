@@ -94,7 +94,7 @@ export class Add extends Component {
         .setAttribute('style','display: block;'));
       (document.querySelector("#loading-bar div")
         .setAttribute('style','display: block;'));
-      // simulates waiting for a network response
+      // simulates waiting for a network response after POST request
       setTimeout( () => {
         this.props.onSubmit(finalSequence);
       }, 400);

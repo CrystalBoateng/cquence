@@ -1,10 +1,11 @@
 # Cquence
 
 ## Features
+List view is filterable and is sortable by any field  
 Form validation prevents duplicate uploads, invalid sequences, missing fields  
-List view is filterable using search bar  
-List view is sortable by any field  
-Modal window shows full sequences color-coded  
+Modal window shows color-coded sequences  
 Images formatted as SVGs to minimize load time  
-Mobile-friendly views  
-  
+Mobile-friendly
+
+## Screenshots
+![Screenshots of the upload, summary, and detail views](screenshot.png)
